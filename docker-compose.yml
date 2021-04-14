@@ -1,0 +1,42 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+    db:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: example
+        ports:
+            - 5432:5432
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
+
+    es:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+        environment:
+            - node.name=es
+            - discovery.type=single-node
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        volumes:
+            - esData:/usr/share/elasticsearch/data
+        ports:
+            - 9200:9200
+        networks:
+            - elastic
+
+volumes:
+  esData:
+    driver: local
+
+networks:
+    elastic:
+        driver: bridge
