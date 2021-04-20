@@ -17,7 +17,7 @@ public class RedirectService {
     public Redirect getValidKey(String key){
         Redirect redirect = this.redirectRepository.findByKeyAndCounterGreaterThan(key, Integer.valueOf(0));
         if(redirect != null){
-            this.redirectRepository.decreaseCounter();
+            this.redirectRepository.decreaseCounter(redirect.key);
         }
         return redirect;
     }

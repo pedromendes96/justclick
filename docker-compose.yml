@@ -2,6 +2,16 @@
 version: '3.1'
 
 services:
+    web:
+        build: .
+        ports:
+          - 8080:8080
+        networks:
+          - default
+        depends_on: 
+          - db
+          - es
+
     db:
         image: postgres
         restart: always

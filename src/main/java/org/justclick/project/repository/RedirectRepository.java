@@ -11,6 +11,6 @@ public interface RedirectRepository extends CrudRepository<Redirect, Long>{
 
     @Modifying
     @Transactional
-    @Query("update Redirect redirect set counter=(redirect.counter - 1)")
-    void decreaseCounter();
+    @Query("update Redirect redirect set counter=(redirect.counter - 1) where key = ?1 and counter >= 0")
+    void decreaseCounter(String key);
 }
