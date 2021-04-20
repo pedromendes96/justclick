@@ -1,0 +1,18 @@
+<Configuration status="DEBUG">
+    <Appenders>
+        <File name="LogToFile" fileName="logs/clicks.json" immediateFlush="true" append="false">
+            <JSONLayout compact="true" eventEol="true"/>
+        </File>
+        <Console name="LogToConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.justclick.project.middleware.LogRequestMiddleware" level="debug" additivity="false">
+            <AppenderRef ref="LogToFile"/>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="LogToConsole"/>
+        </Root>
+    </Loggers>
+</Configuration>

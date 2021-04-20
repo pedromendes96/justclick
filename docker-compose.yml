@@ -6,15 +6,23 @@ services:
         image: postgres
         restart: always
         environment:
-            POSTGRES_PASSWORD: example
+            POSTGRES_USER: justclick
+            POSTGRES_PASSWORD: justclick
+            POSTGRES_DB: justclick
         ports:
             - 5432:5432
+        networks:
+            - default
 
     adminer:
         image: adminer
         restart: always
         ports:
-            - 8080:8080
+            - 8085:8080
+        networks:
+            - default
+        depends_on:
+            - db
 
     es:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
@@ -31,12 +39,12 @@ services:
         ports:
             - 9200:9200
         networks:
-            - elastic
+            - default
 
 volumes:
   esData:
     driver: local
 
 networks:
-    elastic:
+    default:
         driver: bridge
